@@ -63,10 +63,10 @@ def searchMusic(words):
     return meta_list
 
 def createPlayList(theme,meta_list):
-    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following 100 songs. Please choose 10 songs from these 100 songs to make a playlist. The playlist should be in the form of a Markdown numbered list, and the songs should be designated by the number assigned to the song, not the song title.\n\n"
+    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following 100 songs. Please choose 10 songs from these 100 songs to make a playlist. The playlist should be in the form of a Markdown numbered list, and the songs should be designated by the number assigned to the song, not the song title. Also, pay attention to the order of the songs.\n\n"
     c = 1
     for i in meta_list:
-        prompt += f"{c}. {i['title']} - {i['artist']} BPM:{i['tempo']}\n"
+        prompt += f"No{c}: {i['title']} - {i['artist']} BPM:{i['tempo']}\n"
         c += 1
     return prompt
 
