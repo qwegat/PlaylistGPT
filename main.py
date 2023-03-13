@@ -144,4 +144,4 @@ if st.button("生成"):
 )
         for t in playlist:
             stc.html(
-                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>')
+                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>',height=80)
