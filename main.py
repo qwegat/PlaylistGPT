@@ -39,11 +39,11 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
+    st.text(res["choices"][0]["text"])
     return sKillReg.sub("", res["choices"][0]["text"]).split("\n")
 
 
 def searchMusic(words,additional_word,market):
-    st.text(",".join(words))
     id_list = []
     meta_list = []
     for word in words:
