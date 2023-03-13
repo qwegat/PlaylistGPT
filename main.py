@@ -19,7 +19,8 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
-    print(res["choices"][0]["text"])
+    return res["choices"][0]["text"]
 
 
-getSearchWords("Kenshi Yonezu")
+st.title("Test")
+st.text(getSearchWords("Kenshi Yonezu"))
