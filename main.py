@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as stc
 import openai
 import os
 import re
@@ -41,18 +42,18 @@ def getSearchWords(theme):
     return sKillReg.sub("", res["choices"][0]["text"]).split("\n")
 
 
-def searchMusic(words):
+def searchMusic(words,additional_word,market):
     id_list = []
     meta_list = []
     for word in words:
-        res = spotify.search(word, limit=10, offset=0, type='track', market="jp")
+        res = spotify.search(word+(" "+additional_word if len(additional_word) else ""), limit=10, offset=0, type='track', market=market)
         for track in res['tracks']['items']:
             id_list.append(track['id'])
             meta_list.append({
-                #"genre": ",".join(track["genres"]),
+                "id": track["id"],
                 "title": track["name"],
                 "artist":",".join([x["name"] for x in track["artists"]]),
-                #"release_date": track["release_date"]
+                "uri": track["uri"],
             })
     features = spotify.audio_features(id_list)
     c = 0
@@ -62,13 +63,56 @@ def searchMusic(words):
         c += 1
     return meta_list
 
-def createPlayList(theme,meta_list):
-    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following 100 songs. Please choose 10 songs from these 100 songs to make a playlist. The playlist should be in the form of a Markdown numbered list, and the songs should be designated by the number assigned to the song, not the song title. Also, pay attention to the order of the songs.\n\n"
+def createPlayList(theme,meta_list,tracks_length):
+    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following {len(meta_list)} songs. Please choose {tracks_length} songs from these 100 songs to make a playlist. The playlist should be in the form of a Markdown numbered list,  Don't just arrange the songs, rearrange them with the order in mind. Do not include BPM in the result.\n\n"
     c = 1
     for i in meta_list:
         prompt += f"No{c}: {i['title']} - {i['artist']} BPM:{i['tempo']}\n"
         c += 1
-    return prompt
+    res = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": "prompt"
+            }
+        ]
+    )
+    ressp = sKillReg.sub("", res["choices"][0]["message"]["content"]).split("\n")
+    result_ids = []
+    for m in ressp:
+        sp = m.split(" - ")
+        title_match = meta_list.filter(lambda x:x["title"] == sp[0])
+        if len(title_match):
+            title_artist_match =  meta_list.filter(lambda x:x["artist"] == sp[1])
+            if len(title_artist_match):
+                result_ids.append(title_artist_match[0])
+            else:
+                result_ids.append(title_match[0])
 
-st.title("Test")
-st.text(createPlayList("Kenshi Yonezu",searchMusic(DAMMY_RESULT)))
+    return result_ids
+
+
+def generate(theme,tracks_length,market,additional_word):
+    words = getSearchWords(theme),
+    searchResult = searchMusic(words,additional_word,market)
+    playlist = createPlayList(theme,searchResult,tracks_length)
+    return playlist
+
+def render(playlist):
+    for t in playlist:
+        stc.html(f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
+        
+
+
+st.title("PlaylistGPT")
+st.header('ChatGPTにSpotifyのプレイリストを作らせます')
+inputed_theme = st.text_input("テーマ", value="ねこ", max_chars=20, placeholder="ねこ")
+inputed_tracks_length = st.number_input("曲数", min_value=1, max_Value=50, value=10)
+selected_market = st.selectbox("マーケット", ["jp", "us"])
+with st.expander("高度な設定"):
+    inputed_additional_word = st.text_input("追加の検索ワード", value="",placeholder="year:2020")
+if st.button("生成"):
+    if len(inputed_theme):
+        with st.spinner("プレイリストを作成中…"):
+            generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
