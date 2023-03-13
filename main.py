@@ -8,7 +8,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 openai.api_key = os.getenv("CHATGPT_API_KEY")
 
-sKillReg = re.compile("^\d+\. |\"", re.MULTILINE)
+sKillReg = re.compile("^\d+\. ", re.MULTILINE)
 
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
