@@ -133,7 +133,6 @@ if st.button("生成"):
             if len(playlist) <= c:
                 break
         outText += "\n…"
-        outText = st_javascript("await fetch('').then(r => window.parent.location.href)")
         stc.html(
     f"""
         <a href="https://twitter.com/share?text={outText}" class="twitter-share-button">
