@@ -104,6 +104,7 @@ def generate(theme,tracks_length,market,additional_word):
 
 def render(playlist):
     for t in playlist:
+        st.text(t["id"])
         stc.html(f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
         
 
