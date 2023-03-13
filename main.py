@@ -6,7 +6,7 @@ import re
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from streamlit_javascript import st_javascript
-import twitter_text
+from twitter_text import parse_tweet
 import urllib.parse
 
 url = st_javascript("await fetch('').then(r => window.parent.location.href)")
@@ -128,7 +128,7 @@ if st.button("生成"):
         outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
         d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
-        while twitter_text.parse_tweet(outText+d)["weightedLength"] <= 138:
+        while parse_tweet(outText+d)["weightedLength"] <= 138:
             outText += d
             c += 1
             d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
