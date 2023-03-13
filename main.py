@@ -46,7 +46,10 @@ def searchMusic(words,additional_word,market):
     id_list = []
     meta_list = []
     for word in words:
-        res = spotify.search(word+(" "+additional_word if len(additional_word) else ""), limit=10, offset=0, type='track', market=market)
+        sq = word
+        if len(additional_word):
+            sq += " " + additional_word
+        res = spotify.search(sq, limit=10, offset=0, type='track', market=market)
         for track in res['tracks']['items']:
             id_list.append(track['id'])
             meta_list.append({
