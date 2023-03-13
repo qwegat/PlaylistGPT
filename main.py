@@ -20,3 +20,6 @@ def getSearchWords(theme):
         presence_penalty=0
     )
     print(sKillReg.sub("",res["choices"][0]))
+
+
+getSearchWords("Kenshi Yonezu")
