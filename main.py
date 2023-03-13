@@ -108,7 +108,7 @@ def render(playlist):
 st.title("PlaylistGPT")
 st.header('ChatGPTにSpotifyのプレイリストを作らせます')
 inputed_theme = st.text_input("テーマ", value="ねこ", max_chars=20, placeholder="ねこ")
-inputed_tracks_length = st.number_input("曲数", min_value=1, max_Value=50, value=10)
+inputed_tracks_length = st.number_input("曲数", min_value=1, max_value=50, value=10)
 selected_market = st.selectbox("マーケット", ["jp", "us"])
 with st.expander("高度な設定"):
     inputed_additional_word = st.text_input("追加の検索ワード", value="",placeholder="year:2020")
