@@ -5,6 +5,10 @@ import os
 import re
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from streamlit_javascript import st_javascript
+
+url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+
 
 openai.api_key = os.getenv("CHATGPT_API_KEY")
 
@@ -108,7 +112,8 @@ def generate(theme,tracks_length,market,additional_word):
 
 st.title("PlaylistGPT")
 st.header('ChatGPTにSpotifyのプレイリストを作らせてみる')
-inputed_theme = st.text_input("テーマ", value="ねこ", max_chars=20, placeholder="ねこ")
+st.caption("ChatGPT APIで作りました。プレイリストと言ってもSpotify APIと連携するのが面倒だったので曲を羅列しているだけです。作者のOpenAI APIが無料枠上限に達するまでは動きますが、それ以降は残骸です。残骸が嫌ならお金をください。")
+inputed_theme = st.text_input("テーマ", value="工事現場", max_chars=20, placeholder="工事現場")
 inputed_tracks_length = st.number_input("曲数", min_value=1, max_value=50, value=10)
 selected_market = st.selectbox("マーケット", ["jp", "us"])
 with st.expander("高度な設定"):
@@ -118,7 +123,25 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
-
+        outText = f"{url}\\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\\n"
+        c = 0
+        d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\\n"
+        while len(outText+d) <= 138:
+            outText += d
+            c += 1
+            d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\\n"
+            if len(playlist) <= c:
+                break
+        outText += "\\n…"
+        stc.html(
+    f"""
+        <a href="https://twitter.com/share" class="twitter-share-button" 
+        data-text="{outText}">
+        Tweet
+        </a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    """
+)
         for t in playlist:
             stc.html(
-                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
+                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="86" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
