@@ -43,6 +43,7 @@ def getSearchWords(theme):
 
 
 def searchMusic(words,additional_word,market):
+    st.text(",".join(words))
     id_list = []
     meta_list = []
     for word in words:
@@ -72,7 +73,6 @@ def createPlayList(theme,meta_list,tracks_length):
     for i in meta_list:
         prompt += f"No{c}: {i['title']} - {i['artist']} BPM:{i['tempo']}\n"
         c += 1
-    st.text(prompt)
     res = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
