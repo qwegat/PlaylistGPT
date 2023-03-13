@@ -114,7 +114,8 @@ def generate(theme,tracks_length,market,additional_word):
 
 st.title("PlaylistGPT")
 st.header('ChatGPTにSpotifyのプレイリストを作らせてみる')
-st.caption("ChatGPT APIで作りました。プレイリストと言ってもSpotify APIと連携するのが面倒だったので曲を羅列しているだけです。作者のOpenAI APIが無料枠上限に達するまでは動きますが、それ以降は残骸です。残骸が嫌ならお金をください。")
+st.caption(
+    "ChatGPT APIで作りました。プレイリストと言ってもSpotify APIと連携するのが面倒だったので曲を羅列しているだけです。作者のOpenAI APIが無料枠上限に達するまでは動きますが、それ以降は残骸です。残骸が嫌なら[お金をください](https://www.buymeacoffee.com/qwegat)。")
 inputed_theme = st.text_input("テーマ", value="工事現場", max_chars=20, placeholder="工事現場")
 inputed_tracks_length = st.number_input("曲数", min_value=1, max_value=50, value=10)
 selected_market = st.selectbox("マーケット", ["jp", "us"])
@@ -125,6 +126,7 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
+        st.text(f"## 「{inputed_theme}」のプレイリスト")
         outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
         d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
@@ -144,4 +146,4 @@ if st.button("生成"):
 )
         for t in playlist:
             stc.html(
-                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>',height=80)
+                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>',height=90)
