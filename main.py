@@ -49,7 +49,6 @@ def searchMusic(words):
         for track in res['tracks']['items']:
             id_list.append(track['id'])
             meta_list.append({
-                "genre":",".join(track["genres"]),
                 "artist":",".join([x["name"] for x in track["artists"]]),
                 "release_date": track["release_date"]
             })
