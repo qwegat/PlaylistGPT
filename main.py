@@ -67,7 +67,7 @@ def searchMusic(words,additional_word,market):
     return meta_list
 
 def createPlayList(theme,meta_list,tracks_length):
-    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following {len(meta_list)} songs. Please choose {tracks_length} songs from these 100 songs to make a playlist. The playlist should be in the form of a Markdown numbered list,  Don't just arrange the songs, rearrange them with the order in mind. Do not include BPM in the result.\n\n"
+    prompt = f"I am thinking of making a playlist about '{theme}'. I just searched Spotify for songs to put in the playlist and found the following {len(meta_list)} songs. Please choose {tracks_length} songs from these {len(meta_list)} songs to make a playlist. The playlist should be in the form of a Markdown numbered list,  Don't just arrange the songs, rearrange them with the order in mind. Do not include BPM in the result.\n\n"
     c = 1
     for i in meta_list:
         prompt += f"No{c}: {i['title']} - {i['artist']} BPM:{i['tempo']}\n"
@@ -82,10 +82,10 @@ def createPlayList(theme,meta_list,tracks_length):
         ]
     )
     ressp = sKillReg.sub("", res["choices"][0]["message"]["content"]).split("\n")
+    st.text(res["choices"][0]["message"]["content"])
     result_ids = []
     for m in ressp:
         sp = m.split(" - ")
-        st.text(sp[0])
         title_match = list(filter(lambda x:x["title"] == sp[0],meta_list))
         if len(title_match):
             title_artist_match =  list(filter(lambda x:x["artist"] == sp[1],title_match))
