@@ -39,7 +39,7 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
-    st.text(sKillReg.sub("", res["choices"][0]["text"]))
+    st.code(sKillReg.sub("", res["choices"][0]["text"]))
     return sKillReg.sub("", res["choices"][0]["text"]).split("\n")
 
 
@@ -106,7 +106,7 @@ def generate(theme,tracks_length,market,additional_word):
 
 
 st.title("PlaylistGPT")
-st.header('ChatGPTにSpotifyのプレイリストを作らせます')
+st.header('ChatGPTにSpotifyのプレイリストを作らせてみる')
 inputed_theme = st.text_input("テーマ", value="ねこ", max_chars=20, placeholder="ねこ")
 inputed_tracks_length = st.number_input("曲数", min_value=1, max_value=50, value=10)
 selected_market = st.selectbox("マーケット", ["jp", "us"])
