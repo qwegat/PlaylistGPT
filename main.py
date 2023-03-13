@@ -123,16 +123,17 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
-        outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
+        outText = f"「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
         d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
-        while len(outText+d) <= 138:
+        while len(outText+d) <= 120:
             outText += d
             c += 1
             d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
             if len(playlist) <= c:
                 break
         outText += "\n…"
+        outText = f"{url}\n{outText}"
         stc.html(
     f"""
         <a href="https://twitter.com/share?text={outText}" class="twitter-share-button">
