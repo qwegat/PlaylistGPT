@@ -128,7 +128,7 @@ if st.button("生成"):
         outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
         d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
-        while parse_tweet(outText+d)["weightedLength"] <= 138:
+        while parse_tweet(outText+d).asdict()["weightedLength"] <= 138:
             outText += d
             c += 1
             d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
