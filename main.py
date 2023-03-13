@@ -123,20 +123,20 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
-        outText = f"{url}\\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\\n"
+        outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
-        d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\\n"
+        d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
         while len(outText+d) <= 138:
             outText += d
             c += 1
-            d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\\n"
+            d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
             if len(playlist) <= c:
                 break
-        outText += "\\n…"
+        outText += "\n…"
+        outText = st_javascript("await fetch('').then(r => window.parent.location.href)")
         stc.html(
     f"""
-        <a href="https://twitter.com/share" class="twitter-share-button" 
-        data-text="{outText}">
+        <a href="https://twitter.com/share?text={outText}" class="twitter-share-button">
         Tweet
         </a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
