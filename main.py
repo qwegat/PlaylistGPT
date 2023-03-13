@@ -118,5 +118,7 @@ with st.expander("高度な設定"):
     inputed_additional_word = st.text_input("追加の検索ワード", value="",placeholder="year:2020")
 if st.button("生成"):
     if len(inputed_theme):
+        playlist = None
         with st.spinner("プレイリストを作成中…"):
-            render(generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word))
+            playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
+        render(playlist)
