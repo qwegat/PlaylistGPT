@@ -39,7 +39,6 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
-    st.text(res["choices"][0]["text"])
     return sKillReg.sub("", res["choices"][0]["text"]).split("\n")
 
 
