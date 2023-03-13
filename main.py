@@ -137,12 +137,11 @@ if st.button("生成"):
         outText += "\n…"
         stc.html(
     f"""
-        <a href="https://twitter.com/share" data-text="{outText}" class="twitter-share-button">
+        <a href="https://twitter.com/share" data-text="{outText}">
         Tweet
         </a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     """
 )
         for t in playlist:
             stc.html(
-                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="86" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
+                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>')
