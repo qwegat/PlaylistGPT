@@ -137,7 +137,7 @@ if st.button("生成"):
         outText += "\n…"
         stc.html(
     f"""
-        <a href="https://twitter.com/share" data-text="{urllib.parse.quote(outText)}" class="twitter-share-button">
+        <a href="https://twitter.com/share" data-text="{outText}" class="twitter-share-button">
         Tweet
         </a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
