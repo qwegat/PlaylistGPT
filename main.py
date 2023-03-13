@@ -77,12 +77,11 @@ def createPlayList(theme,meta_list,tracks_length):
         messages=[
             {
                 "role": "system",
-                "content": "prompt"
+                "content": prompt
             }
         ]
     )
     ressp = sKillReg.sub("", res["choices"][0]["message"]["content"]).split("\n")
-    st.text(res["choices"][0]["message"]["content"])
     result_ids = []
     for m in ressp:
         sp = m.split(" - ")
@@ -119,6 +118,5 @@ if st.button("生成"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
 
         for t in playlist:
-            st.text(t["id"])
             stc.html(
                 f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
