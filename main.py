@@ -118,4 +118,4 @@ with st.expander("高度な設定"):
 if st.button("生成"):
     if len(inputed_theme):
         with st.spinner("プレイリストを作成中…"):
-            generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
+            render(generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word))
