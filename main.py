@@ -85,6 +85,7 @@ def createPlayList(theme,meta_list,tracks_length):
     result_ids = []
     for m in ressp:
         sp = m.split(" - ")
+        st.text(sp[0])
         title_match = list(filter(lambda x:x["title"] == sp[0],meta_list))
         if len(title_match):
             title_artist_match =  list(filter(lambda x:x["artist"] == sp[1],title_match))
