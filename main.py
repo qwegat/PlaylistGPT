@@ -126,7 +126,7 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
-        st.text(f"**「{inputed_theme}」のプレイリスト**")
+        st.markdown(f"## 「{inputed_theme}」のプレイリスト**")
         outText = f"{url}\n「{inputed_theme}」をテーマに#PlaylistGPT でプレイリストを作成しました\n"
         c = 0
         d = str(c+1)+". "+playlist[c]["title"]+" - "+playlist[c]["artist"]+"\n"
@@ -139,7 +139,7 @@ if st.button("生成"):
         outText += "\n…"
         stc.html(
     f"""
-        <a href="https://twitter.com/share" data-text="{outText}">
+        <a href="https://twitter.com/share?text={urllib.parse.quote(outText)}">
         Tweet
         </a>
     """
