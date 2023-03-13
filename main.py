@@ -39,7 +39,7 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
-    return sKillReg.sub("", res["choices"][0]["text"]).split("\n")
+    return sKillReg.sub("", res["choices"][0]["text"]).split("\n")[0]
 
 
 def searchMusic(words, additional_word, market):
