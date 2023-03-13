@@ -102,11 +102,6 @@ def generate(theme,tracks_length,market,additional_word):
     playlist = createPlayList(theme,searchResult,tracks_length)
     return playlist
 
-def render(playlist):
-    for t in playlist:
-        st.text(t["id"])
-        stc.html(f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
-        
 
 
 st.title("PlaylistGPT")
@@ -121,4 +116,8 @@ if st.button("生成"):
         playlist = None
         with st.spinner("プレイリストを作成中…"):
             playlist = generate(inputed_theme,inputed_tracks_length,selected_market,inputed_additional_word)
-        render(playlist)
+
+        for t in playlist:
+            st.text(t["id"])
+            stc.html(
+                f'<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/{t["id"]}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>')
