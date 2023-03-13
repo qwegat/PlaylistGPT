@@ -50,7 +50,6 @@ def searchMusic(words):
             id_list.append(track['id'])
             meta_list.append({
                 "artist":",".join([x["name"] for x in track["artists"]]),
-                "release_date": track["release_date"]
             })
     features = spotify.audio_features(id_list)
     c = 0
