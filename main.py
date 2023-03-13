@@ -5,7 +5,7 @@ import re
 
 openai.api_key = os.getenv("CHATGPT_API_KEY")
 
-sKillReg = re.compile("^\d+\. ", flag=re.MULTILINE)
+sKillReg = re.compile("^\d+\. ", re.MULTILINE)
 
 def getSearchWords(theme):
 
