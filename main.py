@@ -19,7 +19,7 @@ def getSearchWords(theme):
         frequency_penalty=0,
         presence_penalty=0
     )
-    return res["choices"][0]["text"]
+    return sKillReg.sub("", res["choices"][0]["text"])
 
 
 st.title("Test")
